@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Vuejs2</title>
+       <style>
+         .color-red  { color: red; }
+         .color-blue { color: blue; }
+         .is-loading { background: red }
+       </style>
+    </head>
+    <body>
+        <div id="root">
+            <h1>Tests for computed properties</h1>
+            <h2>All tasks</h2>
+            <ul>
+              <li v-for="task in tasks">
+                {{ task.description }}
+                <button :title="buttonTitle" :disabled="buttonDisabled" @click="finishTask(task)"> Finish this task</button>
+              </li>
+            </ul>
+
+            <h2>Incompleted tasks</h2>
+            <ul>
+              <li v-for="task in incompleteTasks" v-text="task.description"></li>
+            </ul>
+
+            <h2>Completed tasks</h2>
+            <ul>
+              <li v-for="task in completeTasks" v-text="task.description"></li>
+            </ul>
+
+            <h1>Tests for event handler</h1>
+           <button :title="title" :class="{ 'is-loading': isLoading }" @click="toogleClass">Toogle Me</button>
+           <button :disabled="enabledButton">Teste Disable</button>
+
+           <h1>Tsts for bind</h1>
+           <h2 :class="className">James</h2>
+
+           <h1>Tests for v-for directive and dynamic inclusion</h1>
+            <li v-for="name in names" v-text="name"></li>
+
+            <input type="text" v-model="newName">
+            <button @click="addName">Add Name</button>
+        </div>
+
+        <script src="https://unpkg.com/vue@2.3.4"></script>
+        <script>
+
+          var app = new Vue({
+            el: '#root',
+            data: {
+              message: 'Hello World',
+              newName: '',
+              names:['Joe', 'Jane', 'Jack'],
+              title: 'Now title is dynamic',
+              className: 'color-red',
+              isLoading: false,
+              enabledButton: false,
+              tasks: [
+                { description: 'Go to the store', completed: true },
+                { description: 'Finish tutorial', completed: false },
+                { description: 'make decisions', completed: false },
+                { description: 'Clear inbox', completed: false },
+                { description: 'make dinner', completed: false },
+                { description: 'Clean room', completed: true },
+              ],
+              buttonTitle: 'Incomplete',
+              buttonDisabled: false
+            },
+
+            methods: {
+              addName() {
+                  this.names.push(this.newName);
+
+                  this.newName = '';
+              },
+              toogleClass() {
+                  this.isLoading = !this.isLoading;
+                  this.enabledButton = this.isLoading;
+              },
+              finishTask(task) {
+
+              }
+            },
+
+            computed: {
+                incompleteTasks() {
+                  return this.tasks.filter(task => !task.completed);
+                },
+                completeTasks() {
+                  return this.tasks.filter(task => task.completed);
+                }
+            }
+
+            /*mounted() {
+              alert('Hi');
+            }*/
+          });
+
+        </script>
+   </body>
+</html>

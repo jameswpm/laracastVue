@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Tasks - VueJs2</title>
+    </head>
+    <body>
+        <div id="root">
+            <h2>All tasks</h2>
+            <ul>
+              <li v-for="task, key in tasks">
+                {{ task.description }}
+                <button @click="finishTask(key)"> Finish this task</button>
+              </li>
+            </ul>
+
+            <h2>Incompleted tasks</h2>
+            <ul>
+              <li v-for="task in incompleteTasks" v-text="task.description"></li>
+            </ul>
+
+            <h2>Completed tasks</h2>
+            <ul>
+              <li v-for="task in completeTasks" v-text="task.description"></li>
+            </ul>
+        </div>
+
+        <script src="https://unpkg.com/vue@2.3.4"></script>
+        <script>
+
+          var app = new Vue({
+            el: '#root',
+            data: {
+              tasks: [
+                { description: 'Go to the store', completed: true },
+                { description: 'Finish tutorial', completed: false },
+                { description: 'make decisions', completed: false },
+                { description: 'Clear inbox', completed: false },
+                { description: 'make dinner', completed: false },
+                { description: 'Clean room', completed: true },
+              ],
+            },
+
+            methods: {
+              finishTask(id) {
+                  this.tasks[id].completed = true;
+              }
+            },
+
+            computed: {
+                incompleteTasks() {
+                  return this.tasks.filter(task => !task.completed);
+                },
+                completeTasks() {
+                  return this.tasks.filter(task => task.completed);
+                }
+            }
+
+            /*mounted() {
+              alert('Hi');
+            }*/
+          });
+
+        </script>
+   </body>
+</html>
