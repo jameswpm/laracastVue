@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-       <title>Components101 - VueJs2</title>
+       <title>Inline style and Single components - VueJs2</title>
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
        <style type="text/css">body{ padding-top: 40px; }</style>
     </head>
     <body>
-        <div id="root">
-          <message title="Hello" body="Mussum ipsis literis. Lorem ipsum"></message>
+        <div id="root" class="container">
 
-          <modal v-if="showModal" @close="showModal = false"></modal>
+          <progress-view inline-template>
+            <div>
+              <h1>Your progression in {{ completionRate}}%</h1>
 
-          <button @click="showModal = true">Show Modal</button>
+              <p><button @click="completionRate += 10">Update</button></p>
+            </div>
+          </progress-view>
 
         </div>
 
